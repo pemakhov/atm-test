@@ -1,0 +1,22 @@
+{
+  "name": "atm-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "atm-template.js",
+  "scripts": {
+    "test": "mocha --reporter nyan"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pemakhov/atm-test.git"
+  },
+  "author": "Serhii Pemakhov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pemakhov/atm-test/issues"
+  },
+  "homepage": "https://github.com/pemakhov/atm-test#readme",
+  "dependencies": {
+    "mocha": "^6.2.2"
+  }
+}
