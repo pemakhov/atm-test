@@ -1,8 +1,11 @@
 const assert = require('assert');
-const atm = require('./atm-template').ATM;
+const atmNotAuth = require('./atm-template').ATM;
 
-let initialCash = atm.cash;
-let logsNumber = atm.logs.length;
+const atmAdmin = require('./atm-template').ATM;
+atmAdmin.auth("0000", "000");
+
+let initialCash = atmNotAuth.cash;
+let logsNumber = atmNotAuth.logs.length;
 
 console.log(`cash = ${initialCash}`);
 
@@ -14,96 +17,96 @@ console.log(`cash = ${initialCash}`);
 
 describe('Testing the attempt of authorization with wrong user id', function () {
 
-    atm.auth("9999", "123"); // It is expected that there is no user with 9999 id
+    atmNotAuth.auth("9999", "123"); // It is expected that there is no user with 9999 id
     logsNumber++;
 
     it('Should return false for isAuth', function () {
-        assert.equal(atm.isAuth, false);
+        assert.equal(atmNotAuth.isAuth, false);
     });
     it('Should return the correct logs number', function () {
-        assert.equal(atm.logs.length, logsNumber);
+        assert.equal(atmNotAuth.logs.length, logsNumber);
     });
 });
 
 describe('Testing an attempt of authorization with wrong pin', function () {
 
-    atm.auth("0025", "124");
+    atmNotAuth.auth("0025", "124");
     logsNumber++;
 
     it('Should return false for isAuth', function () {
-        assert.equal(atm.isAuth, false);
+        assert.equal(atmNotAuth.isAuth, false);
     });
     it('Should return the correct logs number', function () {
-        assert.equal(atm.logs.length, logsNumber);
+        assert.equal(atmNotAuth.logs.length, logsNumber);
     });
 });
 
 describe('Testing the attempt of balance check by an unauthorized user.', function () {
 
-    atm.check();
+    atmNotAuth.check();
     logsNumber++;
 
     it('Should return the correct logs number', function () {
-        assert.equal(atm.logs.length, logsNumber);
+        assert.equal(atmNotAuth.logs.length, logsNumber);
     });
 });
 
 describe('Testing the attempt of cache withdrawal by an unauthorized user.', function () {
 
-    atm.getCash(1);
+    atmNotAuth.getCash(1);
     logsNumber++;
 
     it('Should return amount of cash equal to te initial amount', function () {
-        assert.equal(atm.cash, initialCash);
+        assert.equal(atmNotAuth.cash, initialCash);
     });
     it('Should return correct logs number', function () {
-        assert.equal(atm.logs.length, logsNumber);
+        assert.equal(atmNotAuth.logs.length, logsNumber);
     });
 });
 
 describe('Testing the attempt of load cache (on a user balance) by an unauthorized user.', function () {
 
-    atm.loadCash(1);
+    atmNotAuth.loadCash(1);
     logsNumber++;
 
     it('Should return amount of cash equal to te initial amount', function () {
-        assert.equal(atm.cash, initialCash);
+        assert.equal(atmNotAuth.cash, initialCash);
     });
     it('Should return correct logs number', function () {
-        assert.equal(atm.logs.length, logsNumber);
+        assert.equal(atmNotAuth.logs.length, logsNumber);
     });
 });
 
 describe('Testing the attempt of load ATM cache by an unauthorized user.', function () {
 
-    atm.loadAtmCash(1);
+    atmNotAuth.loadAtmCash(1);
     logsNumber++;
 
     it('Should return amount of cash equal to te initial amount', function () {
-        assert.equal(atm.cash, initialCash);
+        assert.equal(atmNotAuth.cash, initialCash);
     });
     it('Should return correct logs number', function () {
-        assert.equal(atm.logs.length, logsNumber);
+        assert.equal(atmNotAuth.logs.length, logsNumber);
     });
 });
 
 describe('Testing the attempt of getting logs by an unauthorized user.', function () {
 
-    atm.getLogs();
+    atmNotAuth.getLogs();
     logsNumber++;
 
     it('Should return correct logs number', function () {
-        assert.equal(atm.logs.length, logsNumber);
+        assert.equal(atmNotAuth.logs.length, logsNumber);
     });
 });
 
 describe('Testing the attempt of logging out by an unauthorized user.', function () {
 
-    atm.logout();
+    atmNotAuth.logout();
     logsNumber++;
 
     it('Should return correct logs number', function () {
-        assert.equal(atm.logs.length, logsNumber);
+        assert.equal(atmNotAuth.logs.length, logsNumber);
     });
 });
 
@@ -114,16 +117,19 @@ describe('Testing the attempt of logging out by an unauthorized user.', function
  *                                        *
  ******************************************/
 
+const atmUser = require('./atm-template').ATM;
+atmUser.auth("0025", "123");
+console.log('logs number = ' + atmUser.logs.length);
 
-// describe('Testing successful user authentication', function () {
-//
-//     // atm.auth("0025", "123");
-//     logsNumber++;
-//
-//     it('Should return true for isAuth', function () {
-//         assert.equal(atm.isAuth, true);
-//     });
-//     it('Should return the correct logs number', function () {
-//         assert.equal(atm.logs.length, logsNumber);
-//     });
-// });
+initialCash = atmUser.cash;
+logsNumber = atmUser.logs.length;
+
+describe('Testing successful user authentication', function () {
+
+    it('Should return true for isAuth', function () {
+        assert.equal(atmUser.isAuth, true);
+    });
+    it('Should return the correct logs number', function () {
+        assert.equal(atmUser.logs.length, logsNumber);
+    });
+});
