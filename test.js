@@ -1,8 +1,14 @@
 const assert = require('assert');
-const atmNotAuth = require('./atm-template').ATM;
+const atm= require('./atm-template').ATM;
 
-const atmAdmin = require('./atm-template').ATM;
-atmAdmin.auth("0000", "000");
+let atmNotAuth = {};
+let atmUser = {};
+let atmAdmin = {};
+atmNotAuth = Object.assign(atmNotAuth, atm);
+atmUser = Object.assign(atmUser, atm);
+atmAdmin = Object.assign(atmAdmin, atm);
+
+/* atmAdmin.auth("0000", "000"); */
 
 let initialCash = atmNotAuth.cash;
 let logsNumber = atmNotAuth.logs.length;
@@ -15,16 +21,18 @@ console.log(`cash = ${initialCash}`);
  *                        *
  **************************/
 
-describe('Testing the attempt of authorization with wrong user id', function () {
-
-    atmNotAuth.auth("9999", "123"); // It is expected that there is no user with 9999 id
-    logsNumber++;
-
-    it('Should return false for isAuth', function () {
-        assert.equal(atmNotAuth.isAuth, false);
-    });
-    it('Should return the correct logs number', function () {
-        assert.equal(atmNotAuth.logs.length, logsNumber);
+describe('Testing unauthorized user', function () {
+    describe('Testing the attempt of authorization with a wrong user id', function () {
+    
+        atmNotAuth.auth("9999", "123"); // It is expected that there is no user with 9999 id
+        logsNumber++;
+    
+        it('Should return false for isAuth', function () {
+            assert.equal(atmNotAuth.isAuth, false);
+        });
+        it('Should return the correct logs number', function () {
+            assert.equal(atmNotAuth.logs.length, logsNumber);
+        });
     });
 });
 
@@ -117,7 +125,6 @@ describe('Testing the attempt of logging out by an unauthorized user.', function
  *                                        *
  ******************************************/
 
-const atmUser = require('./atm-template').ATM;
 atmUser.auth("0025", "123");
 console.log('logs number = ' + atmUser.logs.length);
 
