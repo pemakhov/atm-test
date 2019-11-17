@@ -1,10 +1,10 @@
 # atm-test
 
-This test was created for testing atm objects from ST1, introduction to full stack.
+These tests were created for testing atm objects from ST1 task (introduction to full stack, SH++).
 
 The name of the object, all properties and methods should be as they were in the task, without any changes.
 
-Also ATM object should contain user and admin objects, given in the task. It may contain other user objects.
+Also ATM object should contain user and admin data objects, given in the task. It may contain other user data objects.
 
 There should be logs array containing logs:
 
@@ -28,5 +28,3 @@ npm install
 4. Run the tests with the command:
 
 npm test test.js
-
-
