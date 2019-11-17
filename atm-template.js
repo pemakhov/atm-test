@@ -54,7 +54,7 @@ const ATM = {
         }
         this.logs.unshift("User with id " + this.currentUser.id + " checked the balance.");
         console.log("You have $" + this.currentUser.debet + " on your balance.");
-
+        return this.currentUser.debet;
     },
     // get cash - available for user only
     getCash(amount) {
@@ -64,15 +64,18 @@ const ATM = {
             return;
         }
         if (this.currentUser.type !== 'user') {
+            this.logs.unshift("Not user with id " + this.currentUser.id + " tried to withdraw money.");
             console.log("Only users can withdraw money. You are not a user.");
             return;
         }
         amount = parseInt(amount);
         if (typeof amount !== 'number' || amount <= 0) {
+            this.logs.unshift("User with id " + this.currentUser.id + " made wrong input.");
             console.log("Please, input a valid amount.");
             return;
         }
         if (this.currentUser.debet < amount) {
+            this.logs.unshift("User with id " + this.currentUser.id + " tried to withdraw more than on the debet.");
             console.log("You don't have enough money on your balance.");
             return;
         }
